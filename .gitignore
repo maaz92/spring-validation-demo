@@ -1,0 +1,58 @@
+# === Java ===
+*.class
+*.jar
+*.war
+*.ear
+*.log
+*.iml
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+
+# === Maven ===
+/target/
+
+# === Gradle ===
+/build/
+/.gradle/
+/out/
+
+# === Logs ===
+logs/
+*.log
+
+# === IDEs ===
+
+## IntelliJ IDEA
+/.idea/
+/*.iws
+/*.iml
+/*.ipr
+
+## Eclipse
+/.settings/
+/.project
+/.classpath
+
+## VS Code
+.vscode/
+
+# === Spring Boot Dev Tools ===
+.spring-boot-devtools.properties
+
+# === Test reports ===
+/test-output/
+/surefire-reports/
+
+# === Environment files ===
+.env
+*.env
+
+# === Local DB ===
+*.h2.db
+*.mv.db
+
+# === Other ===
+node_modules/
+dist/
