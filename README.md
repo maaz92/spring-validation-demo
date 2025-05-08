@@ -226,3 +226,36 @@ public class DateOfBirthValidator implements ConstraintValidator<DateOfBirth, St
     private String dateOfBirth;
 ```
 - Check [constraint class](src/main/java/com/springvalidation/demo/validation/constraints/DateOfBirth.java) and [validator class](src/main/java/com/springvalidation/demo/validation/constraints/validator/DateOfBirthValidator.java)
+## Partial Validation using groups
+- You should avoid this as it's an antipattern and conflicts separation of concerns
+- Declare interface for validation group. E.g.
+```java
+public interface BasicInfo {}
+```
+- Attach Constraints to only specific groups. E.g.
+```java
+@Getter
+@Setter
+public class UserAccountDto2 {
+
+  @NotNull(groups = BasicInfo.class)
+  @Size(min = 4, max = 15, groups = BasicInfo.class)
+  private String password;
+
+  @NotBlank(groups = BasicInfo.class)
+  private String username;
+
+  @Min(value = 18, message = "Age should not be less than 18", groups = AdvanceInfo.class)
+  private int age;
+}
+```
+- Use @Validated(\<Group\>.class) with method argument
+```java
+    @PostMapping("/add-basic-info")
+    /*@Validated annotation is used here if we want granular validation
+    only for fields that belong to a particular group. Here BasicInfo group is used.
+    In UserAccountDto username and password have Constraints belonging to group BasicInfo.
+    */
+    public void addBasicInfo(@Validated(BasicInfo.class) @RequestBody UserAccountDto2 userAccountDto2) {}
+```
+- Only the constraints that belong to that particular group will be applied. Other constraints won't be applied.
