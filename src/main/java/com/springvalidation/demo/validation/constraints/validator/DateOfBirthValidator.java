@@ -4,7 +4,6 @@ import com.springvalidation.demo.validation.constraints.DateOfBirth;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.extern.slf4j.Slf4j;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 

@@ -1,13 +1,10 @@
 package com.springvalidation.demo.dto;
 
 import com.springvalidation.demo.validation.constraints.DateOfBirth;
-import com.springvalidation.demo.validation.groups.AdvanceInfo;
-import com.springvalidation.demo.validation.groups.BasicInfo;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.List;
 import java.util.Map;
 

@@ -18,9 +18,9 @@ public class UserAccountController {
     public void addAllInfo(@Valid @RequestBody UserAccountDto1 userAccountDto2) {}
 
     @GetMapping("/{id}") // For query/path params use @Validated for controller
-    public void getInfo(@NotNull @Size(min=4, max = 5) @PathVariable String id,
-                        @NotNull @Size(min=2) @RequestParam(required = false) String active) {}
-    // You should use required = false and add validation here for best Client Experience
+    public void getInfo(@NotNull @Size(min=3, max = 5, message = "Id must have a length of at least 3 and at most 5") @PathVariable(required = false) String id,
+                        @NotNull @Size(min=2, message = "Activity must have a length of at least 2") @RequestParam(required = false) String activity) {}
+    // Use required = false  with @NotNull annotation
 
     /*
     In my opinion only the above should be used in controller.
