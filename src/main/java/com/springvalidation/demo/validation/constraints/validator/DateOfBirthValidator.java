@@ -12,6 +12,9 @@ public class DateOfBirthValidator implements ConstraintValidator<DateOfBirth, St
 
     @Override
     public boolean isValid(String dateOfBirth, ConstraintValidatorContext constraintValidatorContext) {
+        if(dateOfBirth==null){
+            return Boolean.FALSE;
+        }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         simpleDateFormat.setLenient(Boolean.FALSE);
         try

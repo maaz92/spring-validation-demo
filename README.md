@@ -130,3 +130,52 @@ public class ProductDto {
     }
 ```
 - Check [controller advice](src/main/java/com/springvalidation/demo/controller/advice/ErrorHandlingControllerAdvice.java)
+## This is how the validation error response looks like
+```json
+400 Bad Request
+{
+    "message": "Some fields are not valid",
+    "violations": [
+        {
+            "fieldName": "returnedProductsCount",
+            "message": "must not be null"
+        },
+        {
+            "fieldName": "username",
+            "message": "must not be blank"
+        },
+        {
+            "fieldName": "ownedProducts[0].quantity",
+            "message": "must be greater than 0"
+        },
+        {
+            "fieldName": "password",
+            "message": "size must be between 4 and 15"
+        },
+        {
+            "fieldName": "ownedProducts[0].name",
+            "message": "must not be blank"
+        },
+        {
+            "fieldName": "ownedProductsMap[1].quantity",
+            "message": "must be greater than 0"
+        },
+        {
+            "fieldName": "ownedProductsMap[1].name",
+            "message": "must not be blank"
+        },
+        {
+            "fieldName": "dateOfBirth",
+            "message": "Invalid Date Of Birth. Expected MM/dd/yyyy"
+        },
+        {
+            "fieldName": "age",
+            "message": "Age should not be less than 18"
+        },
+        {
+            "fieldName": "ownedProducts[1].name",
+            "message": "must not be blank"
+        }
+    ]
+}
+```
