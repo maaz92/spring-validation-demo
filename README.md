@@ -227,7 +227,7 @@ public class DateOfBirthValidator implements ConstraintValidator<DateOfBirth, St
 ```
 - Check [constraint class](src/main/java/com/springvalidation/demo/validation/constraints/DateOfBirth.java) and [validator class](src/main/java/com/springvalidation/demo/validation/constraints/validator/DateOfBirthValidator.java)
 ## Partial Validation using groups
-- You should avoid this as it's an antipattern and conflicts separation of concerns
+- You should avoid this as it's an antipattern and contradicts separation of concerns
 - Declare interface for validation group. E.g.
 ```java
 public interface BasicInfo {}
@@ -259,3 +259,30 @@ public class UserAccountDto2 {
     public void addBasicInfo(@Validated(BasicInfo.class) @RequestBody UserAccountDto2 userAccountDto2) {}
 ```
 - Only the constraints that belong to that particular group will be applied. Other constraints won't be applied.
+
+## What all other places should these validations be used?
+- Anywhere when we interact with external system. E.g. 
+1. Consume messages from a queue
+2. Call a third party API
+#### How to do it? 
+```java
+@Service
+public class UserAccountService {
+
+    @Autowired
+    private Validator validator;
+    
+    public void validate(UserAccount useraccount) {
+
+      Set<ConstraintViolation<UserAccount>> violations = validator.validate(useraccount);
+
+      if (!violations.isEmpty()) {
+        StringBuilder sb = new StringBuilder();
+        for (ConstraintViolation<UserAccount> constraintViolation : violations) {
+          sb.append(constraintViolation.getMessage());
+        }
+        throw new ConstraintViolationException("Error occurred: " + sb.toString(), violations);
+      }
+    }
+}
+```
