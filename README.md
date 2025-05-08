@@ -179,3 +179,50 @@ public class ProductDto {
     ]
 }
 ```
+## To add Custom Constraint
+- Create a constraint class
+```java
+@Documented
+@Constraint(validatedBy = DateOfBirthValidator.class)
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface DateOfBirth {
+    String message() default "Invalid Date Of Birth. Expected MM/dd/yyyy";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
+}
+```
+- Create a validator class
+```java
+@Slf4j
+public class DateOfBirthValidator implements ConstraintValidator<DateOfBirth, String> {
+
+  @Override
+  public boolean isValid(String dateOfBirth, ConstraintValidatorContext constraintValidatorContext) {
+    if(dateOfBirth==null){
+      return Boolean.FALSE;
+    }
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    simpleDateFormat.setLenient(Boolean.FALSE);
+    try
+    {
+      simpleDateFormat.parse(dateOfBirth);
+      return Boolean.TRUE;
+    }
+    /* Date format is invalid */
+    catch (ParseException e)
+    {
+      log.error("Some error message");
+      return Boolean.FALSE;
+    }
+  }
+}
+```
+- Use the custom constraint
+```java
+    @DateOfBirth
+    private String dateOfBirth;
+```
+- Check [constraint class](src/main/java/com/springvalidation/demo/validation/constraints/DateOfBirth.java) and [validator class](src/main/java/com/springvalidation/demo/validation/constraints/validator/DateOfBirthValidator.java)
